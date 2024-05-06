@@ -1,0 +1,15 @@
+{% extends "base.html" %} {# Herdando o html base #}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+        
+<h1>HOME</h1>
+<ul>
+    <li><a href="{{ url_for('index.index') }}">Home</a></li>
+    <li><a href="{{ url_for('funcionario.formListaFuncionario') }}">Funcionário</a></li>
+    <li><a href="{{ url_for('cliente.formListaCliente') }}">Cliente</a></li>
+    <li><a href="{{ url_for('produto.formListaProduto') }}">Produto</a></li>
+</ul>
+
+{% endblock %}
