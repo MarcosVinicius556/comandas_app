@@ -1,15 +1,78 @@
 {% extends "base.html" %} {# Herdando o html base #}
 
-{% block title %} Home {% endblock %}
+{% block title %} Início {% endblock %}
+
+{% block headerMenu %} {% endblock %}
+{% block footerMenu %} {% endblock %}
+
+{% block style %}
+
+    <style>
+        .sidebar-container {
+            border-radius: 5px;
+            width: 25%;
+            max-width: 350px;
+            height: 80%;
+            max-height: 650px;
+            position: absolute;
+            padding: 1em;
+            background: #323232;
+        }
+
+        .sidebar-container h1 {
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-container ul {
+            list-style: none;
+            display: flex;
+            height: 90%;
+            flex-direction: column;
+            padding: 1em;
+        }
+
+        .sidebar-container ul li {
+            height: 50px;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            flex-direction: column;
+            border-bottom: 1px solid gray;
+            padding: .5em;
+            transition: all .3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .sidebar-container ul li:hover {
+            background: #4a4a4a;
+        }
+
+        .sidebar-container ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+    </style>
+
+{% endblock %}
 
 {% block content %}
-        
-<h1>HOME</h1>
-<ul>
-    <li><a href="{{ url_for('index.index') }}">Home</a></li>
-    <li><a href="{{ url_for('funcionario.formListaFuncionario') }}">Funcionário</a></li>
-    <li><a href="{{ url_for('cliente.formListaCliente') }}">Cliente</a></li>
-    <li><a href="{{ url_for('produto.formListaProduto') }}">Produto</a></li>
-</ul>
+
+<div class="sidebar-container mt-4">
+    <h1>Início</h1>
+    <ul>
+        <li><a href="{{ url_for('funcionario.formListaFuncionario') }}"> <i class="fa-solid fa-image-portrait"></i> Funcionário</a></li>
+        <li><a href="{{ url_for('cliente.formListaCliente') }}"> <i class="fa-regular fa-user"></i> Cliente</a></li>
+        <li><a href="{{ url_for('produto.formListaProduto') }}"> <i class="fa-solid fa-store"></i> Produto</a></li>
+        <li><a href="{{ url_for('login.formLogin') }}"> <i class="fa-solid fa-door-open"></i> Sair </a></li>
+    </ul>
+</div>
+
 
 {% endblock %}

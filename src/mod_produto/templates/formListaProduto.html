@@ -2,13 +2,47 @@
 
 {% block title %} Produto {% endblock %}
 
+{% block style %}
+
+    <style>
+        
+    </style> 
+
+{% endblock  %}
+
+
 {% block content %}
 
-<h1>Produto</h1>
-<p>Seja bem vindo!</p>
-
-<ul>
-    <li><a href="{{ url_for('index.index') }}">Home</a></li>
-</ul>
+<div class="page-subheader">
+    <h1 class="mt-4 mb-4 h1" >Produtos</h1>
+    <a class="btn btn-primary" href="{{ url_for('produto.formNovoProduto') }}">Novo Produto</a>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NOME</th>
+        <th scope="col">DESCRIÇÃO</th>
+        <th scope="col">VALOR UNITÁRIO</th>
+        <th scope="col">AÇÕES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Coca-Cola 600ml</td>
+        <td>Refrigerante de cola</td>
+        <td>R$ 4,50</td>
+        <td table>
+            <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+            <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 {% endblock %}
