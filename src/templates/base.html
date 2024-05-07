@@ -17,8 +17,20 @@
                 box-sizing: border-box;
             }
 
+            a {
+                list-style: none;
+                color: #323232
+            }
+
             .full-page {
                 min-height: 75vh; /* Forçando que tenha sempre o tamanho total da tela do indivíduo  */
+            }
+
+            .page-subheader {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
             }
         </style>
         <!-- Fim estilos globais SIMPLES aplicados à toda a aplicação -->
@@ -33,6 +45,9 @@
         
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <!-- Fim import de estilos utilizados na aplicação -->
+
+        <!-- Sweet Alert precisa ser importado antes de renderizar a tela... -->
+        <script src="{{ url_for('static', filename='sweetalert2/js/sweertalert2.js') }}"></script>
     </head>
     <body>
 
@@ -142,10 +157,9 @@
         <!-- Final Rodapé da página -->
 
         <!-- Início import de scripts utilizados na aplicação -->
-        <script src="{{ url_for('static', filename='sweetalert2/js/sweertalert2.js') }}"></script>
-        <script src="{{ url_for('static', filename='bootstrap-5.3.3-dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ url_for('static', filename='fontawesome-free-6.5.2-web/js/all.min.js') }}"></script>
-
+        <script src="{{ url_for('static', filename='bootstrap-5.3.3-dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap-5.3.3-dist/js/bootstrap.js') }}"></script>
         {% block js %}{% endblock %}
         <!-- Fim import de scripts utilizados na aplicação -->
     </body>
