@@ -1,6 +1,6 @@
 {% extends "base.html" %} {# Herdando o html base #}
 
-{% block title %} Novo Cliente {% endblock %}
+{% block title %} Novo Funcionário {% endblock %}
 
 {% block style %}
 
@@ -17,50 +17,37 @@
 
 
 <div class="page-subheader">
-  <h1 class="mt-4 mb-4 h1" >Cadastro de Cliente</h1>
+  <h1 class="mt-4 mb-4 h1" >Cadastro de Funcionário</h1>
   <a class="btn btn-primary" href="{{ url_for('cliente.formListaCliente') }}">Voltar</a>
 </div>
 
-<form name="formNewCliente" id="formNewCliente" action="" method="POST">
+<form name="formNewFuncionario" id="formNewFuncionario" action="" method="POST">
   <div class="row mb-4">
     <div class="col-2">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="codigo">Código</label>
-        <input type="text" id="codigo" class="form-control" />
+        <input type="text" id="codigo" class="form-control" readonly/>
       </div>
     </div>
     <div class="col">
       <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="nome">Nome Cliente</label>
-        <input type="text" id="nome" class="form-control" />
+        <label class="form-label" for="nome">Nome Funcionário</label>
+        <input type="text" id="nome" class="form-control" max-length=100 autofocus required/>
       </div>
     </div>
   </div>
 
   <div class="row mb-4">
+    <div class="col-4">
+      <div data-mdb-input-init class="form-outline">
+        <label class="form-label" for="matricula">Matrícula</label>
+        <input type="number" id="matricula" class="form-control" max-length=15 required/>
+      </div>
+    </div>
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="cpf">CPF</label>
-        <input type="number" id="cpf" class="form-control" />
-      </div>
-    </div>
-    <div class="col-4">
-      <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="telefone">Telefone</label>
-        <input type="number" id="telefone" class="form-control" />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-4">
-      <div class="form-check  mb-4">
-        <input
-          class="form-check-input "
-          type="checkbox"
-          id="compra_fiado"
-        />
-        <label class="form-check-label" for="compra_fiado"> Compra Fiado? </label>
+        <input type="number" id="cpf" class="form-control" max-length=15 required/>
       </div>
     </div>
   </div>
@@ -68,9 +55,19 @@
   <div class="row mb-4">
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="telefone">Data Fiado</label>
-        <input type="date" id="dia_fiado" class="form-control" />
+        <label class="form-label" for="telefone">Telefone</label>
+        <input type="number" id="telefone" class="form-control" max-length=15 required/>
       </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-4">
+        <select class="form-select" name="grupo" id="grupo" aria-label="Grupo">
+          <option value="0">Atendente</option>
+          <option value="1">Caixa</option>
+          <option value="2">Adm</option>
+        </select>
     </div>
   </div>
 
@@ -78,20 +75,20 @@
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="senha">Senha</label>
-        <input type="text" id="senha" class="form-control" />
+        <input type="text" id="senha" class="form-control" required/>
       </div>
     </div>
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="re_senha">Repita a Senha</label>
-        <input type="text" id="re_senha" class="form-control" />
+        <input type="text" id="re_senha" class="form-control" required/>
       </div>
     </div>
   </div>
 
   <!-- Action Buttons -->
   <div class="d-flex justify-content-center btn-center">
-    <button name='salvaClienteDB' id='salvaClienteDB' type="Submit" class="btn btn-success mb-2 btn-center me-3">Salvar</button>
+    <button name='salvaFuncionarioDB' id='salvaFuncionarioDB' type="submit" class="btn btn-success mb-2 btn-center me-3">Salvar</button>
     <button type="button" class="btn btn-danger mb-2 btn-center">Cancelar</button>
   </div>
   

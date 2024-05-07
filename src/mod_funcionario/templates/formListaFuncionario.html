@@ -2,13 +2,53 @@
 
 {% block title %} Funcionário {% endblock %}
 
+{% block style %}
+
+    <style>
+        
+    </style> 
+
+{% endblock  %}
+
+
 {% block content %}
 
-<h1>Funcionário</h1>
-<p>Seja bem vindo!</p>
-
-<ul>
-    <li><a href="{{ url_for('index.index') }}">Home</a></li>
-</ul>
+<div class="page-subheader">
+    <h1 class="mt-4 mb-4 h1" >Funcionários</h1>
+    <a class="btn btn-primary" href="{{ url_for('funcionario.formNovoFuncionario') }}">Novo Funcionário</a>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NOME</th>
+        <th scope="col">MATRÍCULA</th>
+        <th scope="col">CPF</th>
+        <th scope="col">TELEFONE</th>
+        <th scope="col">GRUPO</th>
+        <th scope="col">SENHA</th>
+        <th scope="col">AÇÕES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Marcos</td>
+        <td>000000</td>
+        <td>000.000.000-00</td>
+        <td>(49) 9 9999-9999</td>
+        <td>TESTE_1</td>
+        <td>bBolinhas</td>
+        <td table>
+            <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+            <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 {% endblock %}
