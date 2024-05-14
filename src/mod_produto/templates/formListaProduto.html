@@ -28,20 +28,24 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Coca-Cola 600ml</td>
-        <td>Refrigerante de cola</td>
-        <td>R$ 4,50</td>
-        <td table>
-            <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </a>
-            <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
-                <i class="fa-solid fa-trash"></i>
-            </a>
-        </td>
-      </tr>
+      {% if result %}
+        {% for row in result %}
+          <tr>
+            <th scope="row">{{row["id_produto"]}}</th>
+            <td>{{row["nome"]}}</td>
+            <td>{{row["descricao"]}}</td>
+            <td>{{row["valor_unitario"]}}</td>
+            <td table>
+                <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
     </tbody>
   </table>
 

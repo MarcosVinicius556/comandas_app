@@ -31,23 +31,27 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Marcos</td>
-        <td>000.000.000-00</td>
-        <td>(49) 9 9999-9999</td>
-        <td>SIM</td>
-        <td>00/00/0000</td>
-        <td>bBolinhas</td>
-        <td table>
-            <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </a>
-            <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
-                <i class="fa-solid fa-trash"></i>
-            </a>
-        </td>
-      </tr>
+      {% if result %}
+        {% for row in result %}
+          <tr>
+            <th scope="row">{{row["id_cliente"]}}</th>
+                <td> {{row["nome"]}} </td>
+                <td>{{row["cpf"]}}</td>
+                <td>{{row["telefone"]}}</td>
+                <td>CAMPO NÃO DEFINIDO NA API</td>
+                <td>CAMPO NÃO DEFINIDO NA API</td>
+                <td>CAMPO NÃO DEFINIDO NA API</td>
+            <td table>
+                <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+          </tr>
+          {% endfor %}
+      {% endif %}
     </tbody>
   </table>
 
