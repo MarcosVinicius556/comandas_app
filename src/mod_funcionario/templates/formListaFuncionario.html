@@ -5,7 +5,13 @@
 {% block style %}
 
     <style>
-        
+        button {
+          border: none;
+        }
+
+        .actions {
+          display: flex;
+        }
     </style> 
 
 {% endblock  %}
@@ -41,13 +47,15 @@
             <td>{{row["telefone"]}}</td>
             <td>{{row["grupo"]}}</td>
             <td>{{row["senha"]}}</td>
-            <td table>
-                <a class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-editar">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                <a class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" href="#Criar-funcao-de-excluir">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
+            <td class="actions" table>
+              <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST" name="formEdit{{ row['id_funcionario'] }}">
+                <input type="hidden" name="id" value="{{ row['id_funcionario'] }}">
+                <button class="link-warning link-offset-2 link-underline link-underline-opacity-0 m-1 h5" type="submit" name="formEditFuncionario"><i class="fa-solid fa-pen-to-square"></i></button>
+              </form>
+              <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST" name="formEdit{{ row['id_funcionario'] }}">
+                <input type="hidden" name="id" value="{{ row['id_funcionario'] }}">
+                <button class="link-danger link-offset-2 link-underline link-underline-opacity-0 m-1 h5" type="submit" name="formEditFuncionario"><i class="fa-solid fa-trash"></i></button>
+              </form>
             </td>
           </tr>
         {% endfor %}

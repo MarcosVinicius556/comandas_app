@@ -37,21 +37,44 @@ def insert():
         cpf = request.form['cpf']
         telefone = request.form['telefone']
         grupo = request.form['grupo']
-        print(request.form)
         senha = Funcoes.get_password_hash(request.form['senha'])
         
         # monta o JSON para envio a API
-        payload = {'nome': nome, 'matricula': matricula, 'cpf': cpf, 'telefone': telefone, 'grupo': grupo, 'senha': senha}
-        
-        # executa o verbo POST da API e armazena seu retorno
-        response = requests.post(ENDPOINT_FUNCIONARIO, headers=getHeadersAPI(), json=payload)
-        result = response.json()
+        payload = {'codigo': '', 'nome': nome, 'matricula': matricula, 'cpf': cpf, 'telefone': telefone, 'grupo': grupo, 'senha': senha}
        
-        if (response.status_code != 200 or result[1] != 200):
-            raise Exception(result)
-            
-        return redirect(url_for('funcionario.formListaFuncionario', msg=result[0]))
+        print('chegou aqui 1') 
+        response = requests.post(ENDPOINT_FUNCIONARIO, headers=getHeadersAPI(), json=payload)
+        print('chegou aqui 1/2')
+        # executa o verbo POST da API e armazena seu retorno
+        print(response)
+        # result = response.json()
+        print('chegou aqui 2')
+        # if (response.status_code != 200 or result[1] != 200):
+            # raise Exception(result)
         
+        print('chegou aqui 3')
+            
+        # return redirect(url_for('funcionario.formListaFuncionario', msg=result[0]))
+        return redirect(url_for('funcionario.formListaFuncionario'))
     except Exception as e:
         print(e);
+        print('chegou aqui 5')
+        return render_template('formListaFuncionario.html', msgErro=e.args[0])
+    
+    
+@bp_funcionario.route("/form-edit-funcionario", methods=['POST'])
+def formEditFuncionario():
+    try:
+        # ID enviado via FORM
+        id_funcionario = request.form['id']
+        # executa o verbo GET da API buscando somente o funcionário selecionado,
+        # obtendo o JSON do retorno
+        response = requests.get(ENDPOINT_FUNCIONARIO + id_funcionario, headers=getHeadersAPI())
+        result = response.json()
+        if (response.status_code != 200):
+            raise Exception(result)
+        
+        # renderiza o form passando os dados retornados
+        return render_template('formFuncionario.html', result=result[0])
+    except Exception as e:
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
