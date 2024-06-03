@@ -17,22 +17,27 @@
 
 
 <div class="page-subheader">
-  <h1 class="mt-4 mb-4 h1" >Cadastro de Funcionário</h1>
+  <h1 class="mt-4 mb-4 h1" >
+     {{ "%s %s" % ('Editar Registro', id) if result else 'Cadastro de Funcionário' }}
+  </h1>
   <a class="btn btn-primary" href="{{ url_for('funcionario.formListaFuncionario') }}">Voltar</a>
 </div>
 
-<form name="formNewFuncionario" id="formNewFuncionario" action="{{ url_for('funcionario.insert') }}" method="POST">
+<form 
+  name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}"
+  action="{{ url_for('funcionario.edit') if result else url_for('funcionario.insert') }}"
+  method="POST">
   <div class="row mb-4">
     <div class="col-2">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="codigo">Código</label>
-        <input type="text" name="codigo" id="codigo" class="form-control" readonly/>
+        <input type="text" name="codigo" id="codigo" value="{{ result['id_funcionario'] }}" class="form-control" readonly/>
       </div>
     </div>
     <div class="col">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="nome">Nome Funcionário</label>
-        <input type="text" name="nome" id="nome" class="form-control" max-length=100 autofocus required/>
+        <input type="text" name="nome" id="nome" value="{{ result['nome'] }}" class="form-control" max-length=100 autofocus required/>
       </div>
     </div>
   </div>
@@ -41,13 +46,13 @@
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="matricula">Matrícula</label>
-        <input type="number" name="matricula" id="matricula" class="form-control" max-length=15 required/>
+        <input type="number" name="matricula" id="matricula" value="{{ result['matricula'] }}" class="form-control" max-length=15 required/>
       </div>
     </div>
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="cpf">CPF</label>
-        <input type="number" name="cpf" id="cpf" class="form-control" max-length=15 required/>
+        <input type="number" name="cpf" id="cpf" value="{{ result['cpf'] }}" class="form-control" max-length=15 required/>
       </div>
     </div>
   </div>
@@ -56,7 +61,7 @@
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="telefone">Telefone</label>
-        <input type="number" name="telefone" id="telefone" class="form-control" max-length=15 required/>
+        <input type="number" name="telefone" id="telefone" value="{{ result['telefone'] }}" class="form-control" max-length=15 required/>
       </div>
     </div>
   </div>
@@ -64,9 +69,9 @@
   <div class="row mb-4">
     <div class="col-4">
         <select class="form-select" name="grupo" id="grupo" aria-label="Grupo">
-          <option value="0">Atendente</option>
-          <option value="1">Caixa</option>
-          <option value="2">Adm</option>
+          <option value="0" {{ 'selected' if result['grupo'] == 0 else '' }}>Atendente</option>
+          <option value="1" {{ 'selected' if result['grupo'] == 1 else '' }}>Caixa</option>
+          <option value="2" {{ 'selected' if result['grupo'] == 2 else '' }}>Adm</option>
         </select>
     </div>
   </div>
@@ -75,13 +80,13 @@
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="senha">Senha</label>
-        <input type="text" name="senha" id="senha" class="form-control" required/>
+        <input type="text" name="senha" id="senha" value="{{ result['senha'] }}" class="form-control" required/>
       </div>
     </div>
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="re_senha">Repita a Senha</label>
-        <input type="text" name="resenha" id="resenha" class="form-control" required/>
+        <input type="text" name="resenha" id="resenha" value="{{ result['senha'] }}" class="form-control" required/>
       </div>
     </div>
   </div>

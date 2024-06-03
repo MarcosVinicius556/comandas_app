@@ -25,7 +25,7 @@ def formListaFuncionario():
 
 @bp_funcionario.route('/new', methods=["GET"])
 def formNovoFuncionario():
-    return render_template('formNovoFuncionario.html'), 200
+    return render_template('formFuncionario.html', result={}), 200
 
 @bp_funcionario.route('/insert', methods=['POST'])
 def insert():
@@ -74,7 +74,40 @@ def formEditFuncionario():
         if (response.status_code != 200):
             raise Exception(result)
         
+        print(result)
         # renderiza o form passando os dados retornados
         return render_template('formFuncionario.html', result=result[0])
     except Exception as e:
+        return render_template('formListaFuncionario.html', msgErro=e.args[0])
+    
+@bp_funcionario.route('/edit', methods=['POST'])
+def edit():
+    try:
+        print('Chegou aqui 1')
+        # dados enviados via FORM
+        id_funcionario = request.form['codigo']
+        nome = request.form['nome']
+        matricula = request.form['matricula']
+        cpf = request.form['cpf']
+        telefone = request.form['telefone']
+        grupo = request.form['grupo']
+        # senha = Funcoes.cifraSenha(request.form['senha'])
+        # monta o JSON para envio a API
+        payload = {'codigo': id_funcionario, 'nome': nome, 'matricula': matricula, 'cpf': cpf, 'telefone': telefone, 'grupo':
+        grupo, 'senha': 'senha'}
+        
+        print('Chegou aqui 1')
+        # executa o verbo PUT da API e armazena seu retorno
+        response = requests.put(ENDPOINT_FUNCIONARIO + id_funcionario, headers=getHeadersAPI(), json=payload)
+        print('Chegou aqui 2')
+        result = response.json()
+        print('Chegou aqui 3')
+        if (response.status_code != 200 or result[1] != 200):
+            raise Exception(result)
+        
+        print('Chegou aqui 4')
+        # return redirect(url_for('funcionario.formListaFuncionario', msg=result[0]))
+        return redirect(url_for('funcionario.formListaFuncionario'))
+    except Exception as e:
+        print(e)
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
