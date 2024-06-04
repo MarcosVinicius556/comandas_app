@@ -111,3 +111,21 @@ def edit():
     except Exception as e:
         print(e)
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
+    
+@bp_funcionario.route('/delete', methods=['POST'])
+def delete():
+    try:
+        id_funcionario = request.form['id']
+        response = requests.delete(ENDPOINT_FUNCIONARIO + id_funcionario, headers=getHeadersAPI())
+        result = response.json()
+
+        # print(response)
+        # print(response.status_code)
+        # print(result)
+        # print(result[0])
+
+        if (response.status_code != 200 or result[1] != 200):
+            raise Exception(result)
+        return jsonify(erro=False, msg=f"Registro {id_funcionario} removido com sucesso!")
+    except Exception as e:
+        return jsonify(erro=True, msgErro=e.args[0])
