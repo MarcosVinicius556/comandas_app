@@ -5,11 +5,13 @@ from settings import getHeadersAPI, ENDPOINT_FUNCIONARIO
 
 from funcoes import Funcoes;
 
+from mod_login.login import validaLogin;
+
 bp_funcionario = Blueprint('funcionario', __name__, url_prefix="/funcionario", template_folder='templates')
 
 ''' rotas dos formulários '''
 @bp_funcionario.route('/', methods=["GET", "POST"])
-# @validaLogin TODO FIXME Verificar....
+@validaLogin
 def formListaFuncionario():
     try:
         response = requests.get(ENDPOINT_FUNCIONARIO, headers=getHeadersAPI())
@@ -24,10 +26,12 @@ def formListaFuncionario():
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
 
 @bp_funcionario.route('/new', methods=["GET"])
+@validaLogin
 def formNovoFuncionario():
     return render_template('formFuncionario.html', result={}), 200
 
 @bp_funcionario.route('/insert', methods=['POST'])
+@validaLogin
 def insert():
     try:
         nome = request.form['nome']
@@ -47,6 +51,7 @@ def insert():
     
     
 @bp_funcionario.route("/form-edit-funcionario", methods=['POST'])
+@validaLogin
 def formEditFuncionario():
     try:
         id_funcionario = request.form['id']
@@ -60,6 +65,7 @@ def formEditFuncionario():
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
     
 @bp_funcionario.route('/edit', methods=['POST'])
+@validaLogin
 def edit():
     try:
         id_funcionario = request.form['codigo']
@@ -84,6 +90,7 @@ def edit():
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
     
 @bp_funcionario.route('/delete', methods=['POST'])
+@validaLogin
 def delete():
     try:
         id_funcionario = request.form['id']

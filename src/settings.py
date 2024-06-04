@@ -22,6 +22,9 @@ ENDPOINT_FUNCIONARIO = os.getenv("ENDPOINT_FUNCIONARIO")
 ENDPOINT_CLIENTE = os.getenv("ENDPOINT_CLIENTE")
 ENDPOINT_PRODUTO = os.getenv("ENDPOINT_PRODUTO")
 
+#Tempo de vida da sessão
+TEMPO_SESSION = os.getenv("TEMPO_SESSION")
+
 # Configurações de segurança
 def getHeadersAPI():
     return {
