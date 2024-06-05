@@ -17,22 +17,28 @@
 
 
 <div class="page-subheader">
-  <h1 class="mt-4 mb-4 h1" >Cadastro de Cliente</h1>
+  <h1 class="mt-4 mb-4 h1" >
+    {{ "%s %s" % ('Editar Registro', id) if result else 'Cadastro de Cliente' }}
+  </h1>
   <a class="btn btn-primary" href="{{ url_for('cliente.formListaCliente') }}">Voltar</a>
 </div>
 
-<form name="formNewCliente" id="formNewCliente" action="" method="POST">
+<form 
+  name="{{ 'formEditar' if result else 'formAdicionar' }}" 
+  id="{{ 'formEditar' if result else 'formAdicionar' }}" 
+  action="{{ url_for('cliente.edit') if result else url_for('cliente.insert') }}" 
+  method="POST">
   <div class="row mb-4">
     <div class="col-2">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="codigo">Código</label>
-        <input type="text" id="codigo" class="form-control" readonly/>
+        <input type="text" name="codigo" id="codigo" class="form-control" value="{{ result['id_cliente'] }}" readonly/>
       </div>
     </div>
     <div class="col">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="nome">Nome Cliente</label>
-        <input type="text" id="nome" class="form-control" max-length=100 autofocus required />
+        <input type="text" name="nome" id="nome" class="form-control" value="{{ result['nome'] }}" max-length=100 autofocus required />
       </div>
     </div>
   </div>
@@ -41,13 +47,13 @@
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="cpf">CPF</label>
-        <input type="number" id="cpf" class="form-control" max-length=11 required/>
+        <input type="number" name="cpf" id="cpf" class="form-control" value="{{ result['cpf'] }}" max-length=11 required/>
       </div>
     </div>
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="telefone">Telefone</label>
-        <input type="number" id="telefone" class="form-control" max-length=11 required/>
+        <input type="number" name="telefone" id="telefone" class="form-control" value="{{ result['telefone'] }}" max-length=11 required/>
       </div>
     </div>
   </div>
@@ -58,6 +64,7 @@
         <input
           class="form-check-input "
           type="checkbox"
+          name="compra_fiado"
           id="compra_fiado"
         />
         <label class="form-check-label" for="compra_fiado"> Compra Fiado? </label>
@@ -69,29 +76,16 @@
     <div class="col-4">
       <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="telefone">Data Fiado</label>
-        <input type="date" id="dia_fiado" class="form-control" />
+        <input type="date" name="dia_fiado" id="dia_fiado" class="form-control" />
       </div>
     </div>
   </div>
 
-  <div class="row mb-5">
-    <div class="col-4">
-      <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="senha">Senha</label>
-        <input type="text" id="senha" class="form-control" />
-      </div>
-    </div>
-    <div class="col-4">
-      <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="re_senha">Repita a Senha</label>
-        <input type="text" id="re_senha" class="form-control" />
-      </div>
-    </div>
   </div>
 
   <!-- Action Buttons -->
   <div class="d-flex justify-content-center btn-center">
-    <button name='salvaClienteDB' id='salvaClienteDB' type="Submit" class="btn btn-success mb-2 btn-center me-3">Salvar</button>
+    <button name='salvaClienteDB' id='salvaClienteDB' type="submit" class="btn btn-success mb-2 btn-center me-3">Salvar</button>
     <button type="button" class="btn btn-danger mb-2 btn-center">Cancelar</button>
   </div>
   

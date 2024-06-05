@@ -34,6 +34,7 @@ def formNovoFuncionario():
 @validaLogin
 def insert():
     try:
+        print(request.form)
         nome = request.form['nome']
         matricula = request.form['matricula']
         cpf = request.form['cpf']
