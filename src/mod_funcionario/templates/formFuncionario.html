@@ -24,7 +24,8 @@
 </div>
 
 <form 
-  name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}"
+  name="{{ 'formEditar' if result else 'formAdicionar' }}" 
+  id="{{ 'formEditar' if result else 'formAdicionar' }}"
   action="{{ url_for('funcionario.edit') if result else url_for('funcionario.insert') }}"
   method="POST">
   <div class="row mb-4">

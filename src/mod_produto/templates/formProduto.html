@@ -1,0 +1,180 @@
+{% extends "base.html" %} {# Herdando o html base #}
+
+{% block title %} Novo Produto {% endblock %}
+
+{% block style %}
+
+    <style>
+      .btn-center { /* Gambiarra para deixar o botão ocupando 100% de largura do card (Algo estava afetando a estilização dele)% */
+        width: 100%;
+      }
+    </style> 
+
+{% endblock  %}
+
+{% set id = result[0].id_produto if result else '0' %}
+{% set nome = result[0].nome if result else '' %}
+{% set descricao = result[0].descricao if result else '' %}
+{% set valor_unitario = result[0].valor_unitario if result else '' %}
+{% set foto = result[0].foto if result else '' %}
+
+{% block js %}
+  <script>
+    $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
+
+    $('#formAdicionar').submit(function (e) {
+      e.preventDefault();
+      var form = $('#formAdicionar')[0];
+      var data = new FormData(form);
+      $.ajax({
+        type: "POST", enctype: 'multipart/form-data', url: "{{url_for('produto.insert')}}", data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        
+        success: function (data) {
+          if (!data.erro) {
+            Swal.fire({
+            title: '', text: 'ID' + data.msg.id + ', ' + data.msg.msg, icon: 'success', showCancelButton: false, confirmButtonColor: '#3085d6',
+
+            cancelButtonColor: '#d33', confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.replace($SCRIPT_ROOT + "{{ url_for('produto.formListaProduto') }}");
+              }
+            });
+          }
+          else {
+            Swal.fire(data.msgErro.msg, data.msgErro.erro, "error");
+          }
+        },
+        // manipular erros da requisição
+        error: function (e) {
+        console.log(e);
+        }
+      }) 
+    })
+
+    $('#formEditar').submit(function (e) {
+      e.preventDefault();
+      var form = $('#formEditar')[0];
+      var data = new FormData(form);
+      $.ajax({
+        type: "POST", enctype: 'multipart/form-data', url: "{{url_for('produto.edit')}}", data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+          if (!data.erro) {
+          Swal.fire({
+            title: '',
+            text: 'ID' + data.msg.id + ', ' + data.msg.msg, icon: 'success', showCancelButton: false, confirmButtonColor: '#3085d6',
+            
+            cancelButtonColor: '#d33', confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.replace($SCRIPT_ROOT + "{{ url_for('produto.formListaProduto') }}");
+              }
+            })
+          }
+          else {
+            Swal.fire(data.msgErro.msg, data.msgErro.erro, "error");
+          }
+        },
+        error: function (e) {
+          console.log(e);
+          }
+        })
+      })
+
+      function displaySelectedImage(event, imgId) {
+        const input = event.target;
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = document.querySelector(`#${imgId}`);
+            img.src = e.target.result;
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+  </script>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-subheader">
+  <h1 class="mt-4 mb-4 h1" >Cadastro de Produto</h1>
+  <a class="btn btn-primary" href="{{ url_for('produto.formListaProduto') }}">Voltar</a>
+</div>
+
+<form 
+  name="{{ 'formEditar' if result else 'formAdicionar' }}" 
+  id="{{ 'formEditar' if result else 'formAdicionar' }}"
+  method="POST"
+  enctype="multipart/form-data">
+  <div class="row mb-4">
+    <div class="col-2">
+      <div data-mdb-input-init class="form-outline">
+        <label class="form-label" for="codigo">Código</label>
+        <input type="text" name="codigo" id="codigo" class="form-control" value="{{ result['id_produto'] }}" readonly/>
+      </div>
+    </div>
+    <div class="col">
+      <div data-mdb-input-init class="form-outline">
+        <label class="form-label" for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" class="form-control" value="{{ result['nome'] }}" max-length=100 autofocus required />
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-4">
+      <div data-mdb-input-init class="form-outline">
+        <label class="form-label" for="valor_unitario">Valor</label>
+        <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" value="{{ result['valor_unitario'] }}" required/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col">
+      <div data-mdb-input-init class="form-outline">
+        <label class="form-label" for="descricao">Descrição</label>
+        <textarea name="descricao" id="descricao" class="form-control" value="{{ result['descricao'] }}" max-length=200 required rows="5"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col">
+        <div>
+          <div class="mb-4 d-flex justify-content-center">
+              <img 
+                name="selectedImage"
+                id="selectedImage" 
+                src="{{ foto }}"
+                alt="example placeholder" 
+                style="width: 300px;" />
+          </div>
+          <div class="d-flex justify-content-center">
+              <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                  <label class="form-label text-white m-1" for="foto">Escolher Imagem</label>
+                  <input type="file" accept="image/" class="form-control d-none" name="foto" id="foto" onchange="displaySelectedImage(event, 'selectedImage')" />
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="d-flex justify-content-center btn-center">
+    <button name='salvaClienteDB' id='salvaClienteDB' type="Submit" class="btn btn-success mb-2 btn-center me-3">Salvar</button>
+    <button type="button" class="btn btn-danger mb-2 btn-center">Cancelar</button>
+  </div>
+  
+</form>
+
+{% endblock %}

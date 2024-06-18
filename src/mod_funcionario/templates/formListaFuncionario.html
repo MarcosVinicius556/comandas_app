@@ -87,7 +87,13 @@
             <td>{{row["cpf"]}}</td>
             <td>{{row["telefone"]}}</td>
             <td>{{row["grupo"]}}</td>
-            <td>{{row["senha"]}}</td>
+            <td>
+                {% if row["senha"]|length > 15 %}
+                    {{ row["senha"][:15] + "..." }}
+                {% else %}
+                    {{ row["senha"] }}
+                {% endif %}
+            </td>
             <td class="actions" table>
               <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST" name="formEdit{{ row['id_funcionario'] }}">
                 <input type="hidden" name="id" value="{{ row['id_funcionario'] }}">
@@ -103,5 +109,7 @@
       {% endif %}
     </tbody>
   </table>
+  <a class="btn btn-warning" href="{{ url_for('report.exportPDF', type=1) }}">Gerar Relatório</a>
+
 
 {% endblock %}

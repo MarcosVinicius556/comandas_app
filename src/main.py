@@ -9,6 +9,7 @@ from mod_funcionario.funcionario import bp_funcionario
 from mod_cliente.cliente import bp_cliente
 from mod_produto.produto import bp_produto
 from mod_login.login import bp_login
+from mod_report.report import bp_report
 
 
 # Tratamento de exceções na aplicação
@@ -37,6 +38,7 @@ app.register_blueprint(bp_funcionario)
 app.register_blueprint(bp_cliente)
 app.register_blueprint(bp_produto)
 app.register_blueprint(bp_login)
+app.register_blueprint(bp_report)
 app.register_blueprint(bp_erro)
 
 
